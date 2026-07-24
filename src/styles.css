@@ -121,6 +121,49 @@ h3 {
   line-height: 1.7;
 }
 
+.education-summary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  max-width: 700px;
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.education-summary p {
+  margin: 0;
+}
+
+.education-label {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.education-degree {
+  font-weight: 700;
+}
+
+.education-school,
+.education-date {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.education-date {
+  text-align: right;
+}
+
+.education-date strong {
+  color: var(--text);
+}
+
 .button-row,
 .project-links {
   display: flex;
@@ -467,6 +510,15 @@ li {
   .section {
     padding-top: 4rem;
     padding-bottom: 4rem;
+  }
+
+  .education-summary {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+
+  .education-date {
+    text-align: left;
   }
 
   .ledger-preview {
