@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>Jason Troup | Full-Stack Developer</title>
     <meta
       name="description"
@@ -15,7 +16,7 @@
       <a class="logo" href="#">Jason Troup</a>
 
       <nav class="nav">
-        <a href="#project">Project</a>
+        <a href="#projects">Projects</a>
         <a href="#skills">Skills</a>
         <a href="#experience">Experience</a>
         <a href="#contact">Contact</a>
@@ -34,41 +35,139 @@
         </p>
 
         <div class="button-row">
-          <a class="button primary" href="https://ADHDStudyAI.com" target="_blank">View ADHD Study AI</a>
-          <a class="button" href="https://github.com/JasonTroup-dev" target="_blank">GitHub</a>
-          <a class="button" href="/Jason-Troup-Resume.pdf" target="_blank">Resume</a>
+          <a class="button primary" href="https://ADHDStudyAI.com" target="_blank" rel="noreferrer">View ADHD Study AI</a>
+          <a class="button" href="https://github.com/JasonTroup-dev" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="button" href="/Jason-Troup-Resume.pdf" target="_blank" rel="noreferrer">Resume</a>
         </div>
       </section>
 
-      <section id="project" class="section">
+      <section id="projects" class="section">
         <div class="section-heading">
-          <p class="eyebrow">Featured Project</p>
-          <h2>ADHD Study AI</h2>
+          <p class="eyebrow">Featured Projects</p>
+          <h2>Work I’ve Built</h2>
         </div>
 
-        <div class="project-card">
-          <div>
-            <h3>AI-powered study planning app for students with ADHD</h3>
+        <div class="projects-list">
+          <article class="project-card">
+            <div>
+              <p class="project-label">AI Study Platform</p>
+              <h3>ADHD Study AI</h3>
 
-            <p>
-              ADHD Study AI helps students generate flashcards, study guides, planner tasks,
-              focus sessions, and tutor support from their study materials.
-            </p>
+              <p>
+                A deployed study-planning app that helps students turn overwhelming
+                assignments and study materials into smaller, clearer next steps.
+              </p>
 
-            <ul>
-              <li>Supabase authentication and database workflows</li>
-              <li>AI flashcard and study guide generation</li>
-              <li>Planner system with tasks, due dates, priority, and estimated time</li>
-              <li>Focus sessions for breaking assignments into smaller work blocks</li>
-              <li>AI tutor interface for guided study support</li>
-              <li>Deployed on Vercel at ADHDStudyAI.com</li>
-            </ul>
-          </div>
+              <ul>
+                <li>Supabase authentication and database workflows</li>
+                <li>AI flashcard and study guide generation</li>
+                <li>Planner system with tasks, due dates, priority, and estimated time</li>
+                <li>Focus sessions for breaking assignments into smaller work blocks</li>
+                <li>AI tutor interface for guided study support</li>
+              </ul>
 
-          <img
-            src="/images/adhd-dashboard.png"
-            alt="Screenshot of the ADHD Study AI dashboard"
-          />
+              <div class="project-links">
+                <a class="button primary" href="https://ADHDStudyAI.com" target="_blank" rel="noreferrer">View Live Site</a>
+              </div>
+            </div>
+
+            <img
+              src="/images/dashboard.png"
+              alt="Screenshot of the ADHD Study AI dashboard"
+            />
+          </article>
+
+          <article class="project-card load-ledger-card">
+            <div>
+              <p class="project-label">Transportation Management System</p>
+              <h3>Load Ledger</h3>
+
+              <p>
+                A full-stack operations platform for managing shipments, dispatch details,
+                clients, carriers, delivery status, and documents from one centralized dashboard.
+              </p>
+
+              <ul>
+                <li>Live shipment dashboard with dispatch attention flags and upcoming pickups</li>
+                <li>Complete shipment, client, contact, location, and carrier workflows</li>
+                <li>AI-assisted PDF extraction with a review step before records are created</li>
+                <li>Authenticated proof-of-delivery storage, preview, and download</li>
+                <li>PostgreSQL persistence with Drizzle ORM, Supabase Auth, and row-level security</li>
+                <li>Unit, component, API route, and end-to-end test coverage</li>
+              </ul>
+
+              <div class="project-links">
+                <a
+                  class="button primary"
+                  href="https://github.com/JasonTroup-dev/Load-Ledger"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View on GitHub
+                </a>
+              </div>
+            </div>
+
+            <div class="ledger-preview" role="img" aria-label="Preview of the Load Ledger operations dashboard">
+              <div class="preview-header">
+                <div class="preview-brand">
+                  <span class="preview-mark">L</span>
+                  <span>Load Ledger</span>
+                </div>
+                <span class="preview-user">JT</span>
+              </div>
+
+              <div class="preview-body">
+                <div class="preview-sidebar" aria-hidden="true">
+                  <span class="active">Dashboard</span>
+                  <span>Shipments</span>
+                  <span>Clients</span>
+                  <span>Carriers</span>
+                </div>
+
+                <div class="preview-main">
+                  <div class="preview-title">
+                    <div>
+                      <small>Operations overview</small>
+                      <strong>Dashboard</strong>
+                    </div>
+                    <span>+ New shipment</span>
+                  </div>
+
+                  <div class="preview-metrics">
+                    <div><small>Active shipments</small><strong>24</strong></div>
+                    <div><small>Needs attention</small><strong>03</strong></div>
+                    <div><small>Upcoming pickups</small><strong>08</strong></div>
+                  </div>
+
+                  <div class="preview-board">
+                    <div class="preview-board-heading">
+                      <strong>Shipment board</strong>
+                      <small>Recent loads and dispatch status</small>
+                    </div>
+                    <div class="preview-row preview-row-labels">
+                      <span>Load</span><span>Customer / Route</span><span>Status</span>
+                    </div>
+                    <div class="preview-row">
+                      <code>LD-1048</code>
+                      <span>Northline Foods<br><small>Fresno → Reno</small></span>
+                      <i>In transit</i>
+                    </div>
+                    <div class="preview-row">
+                      <code>LD-1049</code>
+                      <span>Coastal Supply<br><small>Long Beach → Phoenix</small></span>
+                      <i class="scheduled">Loading</i>
+                    </div>
+                    <div class="preview-row">
+                      <code>LD-1050</code>
+                      <span>Summit Retail<br><small>Oakland → Portland</small></span>
+                      <i class="pending">Scheduled</i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
       </section>
 
@@ -86,17 +185,17 @@
 
           <div class="card">
             <h3>Backend</h3>
-            <p>Supabase, PostgreSQL, API routes, authentication, RLS policies</p>
+            <p>Supabase, PostgreSQL, Drizzle ORM, API routes, authentication, RLS policies</p>
           </div>
 
           <div class="card">
             <h3>AI Integration</h3>
-            <p>OpenAI API, prompt design, AI-generated study tools, streaming chat UI</p>
+            <p>OpenAI API, prompt design, structured PDF extraction, AI-generated study tools, streaming chat UI</p>
           </div>
 
           <div class="card">
-            <h3>Tools</h3>
-            <p>Git, GitHub, Vercel, VS Code, npm</p>
+            <h3>Tools & Testing</h3>
+            <p>Git, GitHub, Vercel, Vitest, Playwright, VS Code, npm</p>
           </div>
         </div>
       </section>
@@ -114,6 +213,7 @@
             <li>Used Excel to track shipment status, details, and operational updates</li>
             <li>Communicated with customers, drivers, and business contacts</li>
             <li>Managed time-sensitive information in a fast-moving environment</li>
+            <li>Applied this domain experience when designing Load Ledger’s operational workflows</li>
           </ul>
         </div>
       </section>
@@ -123,10 +223,26 @@
         <h2>Open to junior developer, full-stack, frontend, web developer, internship, and apprenticeship roles.</h2>
 
         <div class="button-row">
-          <a class="button primary" href="mailto:jasontroupdev@gmail.com">Email Me</a>
-          <a class="button" href="https://github.com/JasonTroup-dev" target="_blank">GitHub</a>
-          <a class="button" href="/Jason-Troup-Resume.pdf" target="_blank">Resume</a>
+          <a
+            class="button primary"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=jasontroupdev@gmail.com&su=Portfolio%20inquiry"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Email with Gmail
+          </a>
+          <button
+            class="button"
+            id="copy-email"
+            type="button"
+            data-email="jasontroupdev@gmail.com"
+          >
+            Copy Email
+          </button>
+          <a class="button" href="https://github.com/JasonTroup-dev" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="button" href="/Jason-Troup-Resume.pdf" target="_blank" rel="noreferrer">Resume</a>
         </div>
+        <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
       </section>
     </main>
 

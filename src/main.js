@@ -4,7 +4,10 @@ import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import { setupCounter } from './counter.js'
 
-document.querySelector('#app').innerHTML = `
+const app = document.querySelector('#app')
+
+if (app) {
+  app.innerHTML = `
 <section id="center">
   <div class="hero">
     <img src="${heroImg}" class="base" width="170" height="179">
@@ -57,4 +60,38 @@ document.querySelector('#app').innerHTML = `
 <section id="spacer"></section>
 `
 
-setupCounter(document.querySelector('#counter'))
+  setupCounter(document.querySelector('#counter'))
+}
+
+const copyEmailButton = document.querySelector('#copy-email')
+const copyStatus = document.querySelector('#copy-status')
+
+copyEmailButton?.addEventListener('click', async () => {
+  const email = copyEmailButton.dataset.email
+
+  if (!email) return
+
+  try {
+    await navigator.clipboard.writeText(email)
+  } catch {
+    const temporaryInput = document.createElement('textarea')
+    temporaryInput.value = email
+    temporaryInput.setAttribute('readonly', '')
+    temporaryInput.style.position = 'fixed'
+    temporaryInput.style.opacity = '0'
+    document.body.appendChild(temporaryInput)
+    temporaryInput.select()
+    document.execCommand('copy')
+    temporaryInput.remove()
+  }
+
+  copyEmailButton.textContent = 'Email Copied'
+
+  if (copyStatus) {
+    copyStatus.textContent = `${email} copied to your clipboard.`
+  }
+
+  window.setTimeout(() => {
+    copyEmailButton.textContent = 'Copy Email'
+  }, 2500)
+})
