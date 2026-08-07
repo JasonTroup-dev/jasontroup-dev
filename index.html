@@ -77,13 +77,34 @@
 
               <div class="project-links">
                 <a class="button primary" href="https://ADHDStudyAI.com" target="_blank" rel="noreferrer">View Live Site</a>
+                <a
+                  class="button"
+                  href="https://github.com/JasonTroup-dev/ADHD-Study-AI#readme"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View README
+                </a>
               </div>
             </div>
 
-            <img
-              src="/images/dashboard.png"
-              alt="Screenshot of the ADHD Study AI dashboard"
-            />
+            <button
+              class="image-zoom-trigger"
+              type="button"
+              aria-label="Enlarge screenshot of the ADHD Study AI dashboard"
+              data-zoomable-image
+            >
+              <img
+                src="/images/dashboard.png"
+                alt="Screenshot of the ADHD Study AI dashboard"
+              />
+              <span class="image-zoom-hint" aria-hidden="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m15 15 5 5m-3-9a6 6 0 1 1-12 0 6 6 0 0 1 12 0Zm-6-3v6m-3-3h6" />
+                </svg>
+                Click to enlarge
+              </span>
+            </button>
           </article>
 
           <article class="project-card load-ledger-card">
@@ -113,6 +134,14 @@
                   rel="noreferrer"
                 >
                   View on GitHub
+                </a>
+                <a
+                  class="button"
+                  href="https://github.com/JasonTroup-dev/Load-Ledger#readme"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View README
                 </a>
               </div>
             </div>
@@ -229,17 +258,9 @@
 
       <section id="contact" class="section contact-section">
         <p class="eyebrow">Contact</p>
-        <h2>Open to junior developer, full-stack, frontend, web developer, internship, and apprenticeship roles.</h2>
+        <h2>Open to junior software engineer, associate software engineer, full-stack engineer, frontend engineer, application developer, internship, and apprenticeship roles.</h2>
 
         <div class="button-row">
-          <a
-            class="button primary"
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=jasontroupdev@gmail.com&su=Portfolio%20inquiry"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Email with Gmail
-          </a>
           <button
             class="button"
             id="copy-email"
@@ -254,6 +275,18 @@
         <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
       </section>
     </main>
+
+    <dialog class="image-lightbox" id="image-lightbox" aria-labelledby="image-lightbox-caption">
+      <div class="image-lightbox-content">
+        <button class="image-lightbox-close" type="button" aria-label="Close enlarged image">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6 6 18" />
+          </svg>
+        </button>
+        <img class="image-lightbox-image" alt="" />
+        <p class="image-lightbox-caption" id="image-lightbox-caption"></p>
+      </div>
+    </dialog>
 
     <script type="module" src="/src/main.js"></script>
   </body>

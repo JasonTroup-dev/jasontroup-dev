@@ -95,3 +95,44 @@ copyEmailButton?.addEventListener('click', async () => {
     copyEmailButton.textContent = 'Copy Email'
   }, 2500)
 })
+
+const imageLightbox = document.querySelector('#image-lightbox')
+const lightboxImage = imageLightbox?.querySelector('.image-lightbox-image')
+const lightboxCaption = imageLightbox?.querySelector('.image-lightbox-caption')
+const lightboxCloseButton = imageLightbox?.querySelector('.image-lightbox-close')
+
+document.querySelectorAll('[data-zoomable-image]').forEach((trigger) => {
+  trigger.addEventListener('click', () => {
+    const image = trigger.querySelector('img')
+
+    if (!imageLightbox || !lightboxImage || !image) return
+
+    lightboxImage.src = image.currentSrc || image.src
+    lightboxImage.alt = image.alt
+
+    if (lightboxCaption) {
+      lightboxCaption.textContent = image.alt
+    }
+
+    imageLightbox.showModal()
+  })
+})
+
+const closeImageLightbox = () => {
+  imageLightbox?.close()
+}
+
+lightboxCloseButton?.addEventListener('click', closeImageLightbox)
+
+imageLightbox?.addEventListener('click', (event) => {
+  if (event.target === imageLightbox) {
+    closeImageLightbox()
+  }
+})
+
+imageLightbox?.addEventListener('close', () => {
+  if (lightboxImage) {
+    lightboxImage.removeAttribute('src')
+    lightboxImage.alt = ''
+  }
+})
