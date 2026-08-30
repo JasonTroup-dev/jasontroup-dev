@@ -1,98 +1,102 @@
 import './styles.css'
-import javascriptLogo from './assets/javascript.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import { setupCounter } from './counter.js'
 
-const app = document.querySelector('#app')
+const header = document.querySelector('[data-header]')
+const menuToggle = document.querySelector('[data-menu-toggle]')
+const navigation = document.querySelector('[data-navigation]')
 
-if (app) {
-  app.innerHTML = `
-<section id="center">
-  <div class="hero">
-    <img src="${heroImg}" class="base" width="170" height="179">
-    <img src="${javascriptLogo}" class="framework" alt="JavaScript logo"/>
-    <img src="${viteLogo}" class="vite" alt="Vite logo" />
-  </div>
-  <div>
-    <h1>Get started</h1>
-    <p>Edit <code>src/main.js</code> and save to test <code>HMR</code></p>
-  </div>
-  <button id="counter" type="button" class="counter"></button>
-</section>
+const closeMenu = () => {
+  header?.removeAttribute('data-menu-open')
+  menuToggle?.setAttribute('aria-expanded', 'false')
+}
 
-<div class="ticks"></div>
+menuToggle?.addEventListener('click', () => {
+  const isOpen = menuToggle.getAttribute('aria-expanded') === 'true'
+  menuToggle.setAttribute('aria-expanded', String(!isOpen))
+  header?.toggleAttribute('data-menu-open', !isOpen)
+})
 
-<section id="next-steps">
-  <div id="docs">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#documentation-icon"></use></svg>
-    <h2>Documentation</h2>
-    <p>Your questions, answered</p>
-    <ul>
-      <li>
-        <a href="https://vite.dev/" target="_blank">
-          <img class="logo" src="${viteLogo}" alt="" />
-          Explore Vite
-        </a>
-      </li>
-      <li>
-        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-          <img class="button-icon" src="${javascriptLogo}" alt="">
-          Learn more
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div id="social">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#social-icon"></use></svg>
-    <h2>Connect with us</h2>
-    <p>Join the Vite community</p>
-    <ul>
-      <li><a href="https://github.com/vitejs/vite" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#github-icon"></use></svg>GitHub</a></li>
-      <li><a href="https://chat.vite.dev/" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#discord-icon"></use></svg>Discord</a></li>
-      <li><a href="https://x.com/vite_js" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#x-icon"></use></svg>X.com</a></li>
-      <li><a href="https://bsky.app/profile/vite.dev" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#bluesky-icon"></use></svg>Bluesky</a></li>
-    </ul>
-  </div>
-</section>
+navigation?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu))
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeMenu()
+})
+document.addEventListener('click', (event) => {
+  if (!header?.hasAttribute('data-menu-open') || header.contains(event.target)) return
+  closeMenu()
+})
 
-<div class="ticks"></div>
-<section id="spacer"></section>
-`
+const updateScrollProgress = () => {
+  const availableScroll = document.documentElement.scrollHeight - window.innerHeight
+  const progress = availableScroll > 0 ? window.scrollY / availableScroll : 0
+  document.documentElement.style.setProperty('--scroll-progress', String(progress))
+  header?.toggleAttribute('data-scrolled', window.scrollY > 20)
+}
 
-  setupCounter(document.querySelector('#counter'))
+updateScrollProgress()
+window.addEventListener('scroll', updateScrollProgress, { passive: true })
+window.addEventListener('resize', () => {
+  updateScrollProgress()
+  if (window.innerWidth > 720) closeMenu()
+})
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+const revealElements = document.querySelectorAll('.reveal')
+
+if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+  revealElements.forEach((element) => element.classList.add('is-visible'))
+} else {
+  const revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        entry.target.classList.add('is-visible')
+        observer.unobserve(entry.target)
+      })
+    },
+    { rootMargin: '0px 0px -8% 0px', threshold: 0.12 },
+  )
+  revealElements.forEach((element) => revealObserver.observe(element))
+}
+
+const sections = [...document.querySelectorAll('main section[id]')]
+const navLinks = [...(navigation?.querySelectorAll('a[href^="#"]') ?? [])]
+
+if ('IntersectionObserver' in window) {
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      const visibleSection = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+      if (!visibleSection) return
+      navLinks.forEach((link) => {
+        link.toggleAttribute('aria-current', link.getAttribute('href') === `#${visibleSection.target.id}`)
+      })
+    },
+    { rootMargin: '-25% 0px -60% 0px', threshold: [0, 0.25, 0.6] },
+  )
+  sections.forEach((section) => sectionObserver.observe(section))
 }
 
 const copyEmailButton = document.querySelector('#copy-email')
+const copyLabel = copyEmailButton?.querySelector('[data-copy-label]')
 const copyStatus = document.querySelector('#copy-status')
 
 copyEmailButton?.addEventListener('click', async () => {
   const email = copyEmailButton.dataset.email
-
   if (!email) return
-
   try {
     await navigator.clipboard.writeText(email)
   } catch {
     const temporaryInput = document.createElement('textarea')
     temporaryInput.value = email
     temporaryInput.setAttribute('readonly', '')
-    temporaryInput.style.position = 'fixed'
-    temporaryInput.style.opacity = '0'
+    temporaryInput.style.cssText = 'position:fixed;opacity:0;pointer-events:none'
     document.body.appendChild(temporaryInput)
     temporaryInput.select()
     document.execCommand('copy')
     temporaryInput.remove()
   }
-
-  copyEmailButton.textContent = 'Email Copied'
-
-  if (copyStatus) {
-    copyStatus.textContent = `${email} copied to your clipboard.`
-  }
-
+  if (copyLabel) copyLabel.textContent = 'Email copied'
+  if (copyStatus) copyStatus.textContent = `${email} copied to your clipboard.`
   window.setTimeout(() => {
-    copyEmailButton.textContent = 'Copy Email'
+    if (copyLabel) copyLabel.textContent = 'Copy email'
   }, 2500)
 })
 
@@ -100,39 +104,26 @@ const imageLightbox = document.querySelector('#image-lightbox')
 const lightboxImage = imageLightbox?.querySelector('.image-lightbox-image')
 const lightboxCaption = imageLightbox?.querySelector('.image-lightbox-caption')
 const lightboxCloseButton = imageLightbox?.querySelector('.image-lightbox-close')
+let activeImageTrigger
 
 document.querySelectorAll('[data-zoomable-image]').forEach((trigger) => {
   trigger.addEventListener('click', () => {
     const image = trigger.querySelector('img')
-
     if (!imageLightbox || !lightboxImage || !image) return
-
+    activeImageTrigger = trigger
     lightboxImage.src = image.currentSrc || image.src
     lightboxImage.alt = image.alt
-
-    if (lightboxCaption) {
-      lightboxCaption.textContent = image.alt
-    }
-
+    if (lightboxCaption) lightboxCaption.textContent = image.alt
     imageLightbox.showModal()
   })
 })
 
-const closeImageLightbox = () => {
-  imageLightbox?.close()
-}
-
-lightboxCloseButton?.addEventListener('click', closeImageLightbox)
-
+lightboxCloseButton?.addEventListener('click', () => imageLightbox?.close())
 imageLightbox?.addEventListener('click', (event) => {
-  if (event.target === imageLightbox) {
-    closeImageLightbox()
-  }
+  if (event.target === imageLightbox) imageLightbox.close()
 })
-
 imageLightbox?.addEventListener('close', () => {
-  if (lightboxImage) {
-    lightboxImage.removeAttribute('src')
-    lightboxImage.alt = ''
-  }
+  lightboxImage?.removeAttribute('src')
+  if (lightboxImage) lightboxImage.alt = ''
+  activeImageTrigger?.focus()
 })

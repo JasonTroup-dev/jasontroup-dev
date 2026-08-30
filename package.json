@@ -5,10 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/build.mjs",
     "preview": "vite preview"
   },
   "devDependencies": {
     "vite": "^8.1.1"
+  },
+  "dependencies": {
+    "@openai/sites-vite-plugin": "^0.2.0"
   }
 }
